@@ -15,7 +15,7 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 
 export class Tree {
     constructor(array) {
-        this.array = this.buildTree(array, 0, array.length - 1);
+        this.root = this.buildTree(array, 0, array.length - 1);
     }
 
     buildTree(array, start, end) {
@@ -34,56 +34,56 @@ export class Tree {
     }
 
     printTree() {
-      prettyPrint(this.array);
+      prettyPrint(this.root);
     }
 
-    insert(value, array = this.array) {
-      if (array == null) {
-        return (array = new Node(value));
+    insert(value, root = this.root) {
+      if (root == null) {
+        return (root = new Node(value));
       }
 
-      if (array.value < value) {
-        array.right = this.insert(value, array.right);
+      if (root.value < value) {
+        root.right = this.insert(value, root.right);
       } else {
-        array.left = this.insert(value, array.left);
+        root.left = this.insert(value, root.left);
       }
 
-      return array;
+      return root;
     }
 
-    delete(value, array = this.array) {
-      if (array == null) {
-        return array;
+    delete(value) {
+      this.root = this.deleteNode(value, this.root);
+    }
+
+    deleteNode(value, root) {
+      if (root === null) {
+        return null;
       }
 
-      if (array.value > value) {
-        array.left = this.delete(value, array.left);
-      } else if (array.value < value) {
-        array.right = this.delete(value, array.right);
+      if (value < root.value) {
+        root.left = this.deleteNode(value, root.left);
+      } else if (value > root.value) {
+        root.right = this.deleteNode(value, root.right);
       } else {
-        if (array.left == null) {
-          return array.right;
-        } else if (array.right == null) {
-          return array.left;
+        if (root.left === null) {
+          return root.right;
+        } else if (root.right === null) {
+          return root.left;
         }
 
-        array.value = minValue(array);
-        array.right = this.delete(array.right, array.value);
+        let minValue = this.findMinValue(root.right);
+        root.value = minValue.value;
+        root.right = this.deleteNode(minValue.value, root.right);
       }
 
-      return array;
+      return root;
     }
 
-    // helper function to supply the minimum value in the array
-    minValue(array) {
-      let min = array.value;
-
-      while (array != null) {
-        min = array.value;
-        array = array.left;
+    findMinValue(root) {
+      while (root.left !== null) {
+        root = root.left;
       }
 
-      return min;
-    }
-    
+      return root;
+    }  
 }
