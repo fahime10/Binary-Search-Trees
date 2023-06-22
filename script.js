@@ -1,18 +1,12 @@
 import { Tree } from "./modules/tree.js";
 
-let array = [1, 2, 3, 4, 5, 6, 7, 8];
+let array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let bst = new Tree(array);
 // bst.printTree();
 
-bst.insert(9);
-bst.insert(10);
-bst.printTree();
-
-bst.delete(9);
-bst.delete(2);
-bst.delete(8);
-bst.printTree();
-
-console.log(bst.find(7));
-console.log(bst.find(8));
 console.log(bst.levelOrder());
+
+bst.printTree();
+console.log("Inorder: " + bst.inorder());
+console.log("Preorder: " + bst.preorder());
+console.log("Postorder: " + bst.postorder());

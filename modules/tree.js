@@ -128,4 +128,53 @@ export class Tree {
 
       return result;
     }
+
+    // <left><root><right>
+    inorder() {
+      const array = [];
+      this.inorderTraversal(this.root, array);
+      return array;
+    }
+
+    // helper function used to draw the correct path, left-most first
+    // then working its way up to root, and then working on the right 
+    // subtree
+    inorderTraversal(root, array) {
+      if (root !== null) {
+        this.inorderTraversal(root.left, array);
+        array.push(root.value);
+        this.inorderTraversal(root.right, array);
+      }
+    }
+
+    // <root><left><right>
+    preorder() {
+      const array = [];
+      this.preorderTraversal(this.root, array);
+      return array;
+    }
+
+    preorderTraversal(root, array) {
+      if (root !== null) {
+        array.push(root.value);
+        this.inorderTraversal(root.left, array);
+        this.inorderTraversal(root.right, array);
+      }
+    }
+
+
+    // <left><right><root>
+    postorder() {
+      const array = [];
+      this.postorderTraversal(this.root, array);
+      return array;
+    }
+
+    postorderTraversal(root, array) {
+      if (root !== null) {
+        this.inorderTraversal(root.left, array);
+        this.inorderTraversal(root.right, array);
+        array.push(root.value);
+      }
+    }
 }
