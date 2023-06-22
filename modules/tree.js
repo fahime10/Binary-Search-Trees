@@ -177,4 +177,31 @@ export class Tree {
         array.push(root.value);
       }
     }
+
+    height(root = this.root) {
+      if (root === null) {
+        return -1;
+      } else {
+        let left = this.height(root.left);
+        let right = this.height(root.right);
+
+        return Math.max(left, right) + 1;
+      }
+    }
+
+    depth(value, root = this.root, edges = 0) {
+      if (root === null) {
+        return;
+      }
+
+      if (root.value === value) {
+        return edges;
+      }
+
+      if (root.value < value) {
+        return this.depth(value, root.right, (edges + 1));
+      } else {
+        return this.depth(value, root.left, (edges + 1));
+      }
+    }
 }
