@@ -51,19 +51,15 @@ export class Tree {
       return root;
     }
 
-    delete(value) {
-      this.root = this.deleteNode(value, this.root);
-    }
-
-    deleteNode(value, root) {
+    delete(value, root = this.root) {
       if (root === null) {
         return null;
       }
 
       if (value < root.value) {
-        root.left = this.deleteNode(value, root.left);
+        root.left = this.delete(value, root.left);
       } else if (value > root.value) {
-        root.right = this.deleteNode(value, root.right);
+        root.right = this.delete(value, root.right);
       } else {
         if (root.left === null) {
           return root.right;
@@ -73,7 +69,7 @@ export class Tree {
 
         let minValue = this.findMinValue(root.right);
         root.value = minValue.value;
-        root.right = this.deleteNode(minValue.value, root.right);
+        root.right = this.delete(minValue.value, root.right);
       }
 
       return root;
@@ -85,5 +81,51 @@ export class Tree {
       }
 
       return root;
-    }  
+    }
+
+    find(value, root = this.root) {
+      if (root === null) {
+        return false;
+      }
+
+      if (root.value === value) {
+        return root;
+      }
+
+      if (root.value > value) {
+        return this.find(value, root.left);
+      } else if (root.value < value) {
+        return this.find(value, root.right);
+      }
+
+      return root;
+    }
+
+    levelOrder() {
+      if (this.root === null) {
+        return [];
+      }
+
+      const queue = [];
+      const result = [];
+
+      // push root node in the queue
+      queue.push(this.root);
+
+      while (queue.length > 0) {
+        // pick first element in the array queue
+        let node = queue.shift();
+        result.push(node.value);
+
+        if (node.left !== null) {
+          queue.push(node.left);
+        }
+
+        if (node.right !== null) {
+          queue.push(node.right);
+        }
+      }
+
+      return result;
+    }
 }
