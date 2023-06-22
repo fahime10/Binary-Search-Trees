@@ -9,8 +9,10 @@ bst.insert(10);
 bst.printTree();
 
 bst.delete(9);
-bst.printTree();
 bst.delete(2);
 bst.delete(8);
-console.log(bst);
 bst.printTree();
+
+console.log(bst.find(7));
+console.log(bst.find(8));
+console.log(bst.levelOrder());
