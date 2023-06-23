@@ -204,4 +204,36 @@ export class Tree {
         return this.depth(value, root.left, (edges + 1));
       }
     }
+
+    isBalanced(root = this.root) {
+      if (root === null) {
+        return false;
+      }
+
+      let leftSide = root.left;
+      let rightSide = root.right;
+
+      if (Math.abs(this.height(leftSide) - this.height(rightSide)) > 1) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    rebalance() {
+      const nodes = this.flattenTree(this.root);
+      this.root = this.buildTree(nodes, 0, nodes.length - 1);
+    }
+
+    // given a tree, we need to put it back into an array
+    flattenTree(root) {
+      if (root === null) {
+        return [];
+      }
+
+      const left = this.flattenTree(root.left);
+      const right = this.flattenTree(root.right);
+
+      return [...left, root.value, ...right];
+    }
 }
